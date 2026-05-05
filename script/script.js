@@ -224,8 +224,13 @@ function resetRound() {
 }
 
 
+
 function launchTimer(gameOptions) {
-    if(gameOptions.pvpEnabled) return;
+    if(gameOptions.pvpEnabled) {
+        timerElement.textContent = ``;
+        clearInterval(gameOptions.timerInterval);
+        return;
+    }
     
     let time = gameOptions.gameTime;
     gameOptions.remainingTime = time;
@@ -260,11 +265,10 @@ function checkWin() {
         if (gameOptions.pvpEnabled) {
             const p1 = gameOptions.player1;
             const p2 = gameOptions.player2;
-            gameOptions.currentRound++;
 
 
             if (p1.score > p2.score) { 
-                msg = `${p1.name} wins!`;
+                pvpRender.textContent = `${p1.name} wins!`;
                 gameOptions.player1.roundsWon++;
             }
             else if (p2.score > p1.score) {
@@ -273,7 +277,8 @@ function checkWin() {
             }
             else pvpRender.textContent = "Draw!";
 
-           if (gameOptions.currentRound <= gameOptions.rounds) {
+           if (gameOptions.currentRound < gameOptions.rounds) {
+            gameOptions.currentRound++;
             setTimeout(() => {
             pvpRender.textContent = `Statistics - ${p1.name}: ${p1.roundsWon} rounds won | ${p2.name}: ${p2.roundsWon} rounds won. Starting round ${gameOptions.currentRound}...`;
             }, 2000);
@@ -283,11 +288,12 @@ function checkWin() {
             }, 2000);
                 return;}
 
-            if (gameOptions.currentRound === gameOptions.rounds + 1) {
-                msg += ` Final Score - ${p1.name}: ${p1.roundsWon} | ${p2.name}: ${p2.roundsWon}`;
-                startGame(gameOptions);
+            if (gameOptions.currentRound === gameOptions.rounds) {
+                pvpRender.textContent = ` Final Score - ${p1.name}: ${p1.roundsWon} | ${p2.name}: ${p2.roundsWon}`;
             }
-        } else {
+        } 
+        
+        else {
             msg = `You Win! Turns: ${gameOptions.turns} | Time remaining: ${gameOptions.remainingTime}s`;
         }
 
@@ -302,7 +308,7 @@ function renderPlayer() {
 
     const current = gameOptions.currentPlayer === 1 ? gameOptions.player1 : gameOptions.player2;
 
-    playerInfo.textContent = `Active Player: ${current.name} | Score: ${current.score}`;
+    playerInfo.textContent = `Round ${gameOptions.currentRound} - Active Player: ${current.name} | Score: ${current.score}`;
 }
 
 function startGame(gameOptions) {
@@ -320,7 +326,7 @@ function startGame(gameOptions) {
     
 
     createTable(gameOptions);
-    launchTimer();
+    launchTimer(gameOptions);
     renderPlayer();
 }
 
