@@ -69,6 +69,8 @@ discardButton.addEventListener('click', () => {
     gameOptions.gridSizeValue = smallValueSize;
     gameOptions.gameTime = 180;
     gameOptions.pvpEnabled = false;
+    pvpRender.textContent = '';
+    playerInfo.textContent = '';
     startGame(gameOptions);
 });
 
