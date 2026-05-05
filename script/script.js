@@ -68,6 +68,7 @@ restartButton.addEventListener('click', () => {
 discardButton.addEventListener('click', () => {
     gameOptions.gridSizeValue = smallValueSize;
     gameOptions.gameTime = 180;
+    gameOptions.pvpEnabled = false;
     startGame(gameOptions);
 });
 
