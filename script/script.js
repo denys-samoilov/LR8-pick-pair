@@ -1,7 +1,6 @@
 const table = document.querySelector('.cards');
 const settingsButton = document.querySelector('.settings-btn');
 const modal = document.getElementById('settingsModal');
-const closeModal = document.getElementById('closeModal');
 const applySettings = document.getElementById('applySettings');
 const timerElement = document.querySelector('.timer');
 const restartButton = document.querySelector('.restart-btn');
@@ -78,7 +77,6 @@ pvpButton.addEventListener('click', () => {
 });
 
 settingsButton.addEventListener('click', () => modal.classList.remove('hidden'));
-closeModal.addEventListener('click', () => modal.classList.add('hidden'));
 
 
 applySettings.addEventListener('click', () => {
@@ -319,6 +317,7 @@ function startGame(gameOptions) {
     restartButton.style.visibility = "hidden";
 
     if (gameOptions.pvpEnabled && gameOptions.currentRound === 1) {
+        pvpRender.textContent = "";
         gameOptions.player1.name = prompt("Enter Player 1's name:");
         gameOptions.player2.name = prompt("Enter Player 2's name:");
         gameOptions.rounds = parseInt(prompt("Enter number of rounds:"));
