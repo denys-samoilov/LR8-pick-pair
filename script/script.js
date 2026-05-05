@@ -224,7 +224,9 @@ function resetRound() {
 }
 
 
-function launchTimer() {
+function launchTimer(gameOptions) {
+    if(gameOptions.pvpEnabled) return;
+    
     let time = gameOptions.gameTime;
     gameOptions.remainingTime = time;
 
